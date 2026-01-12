@@ -1,6 +1,7 @@
 [Unit]
 Description=Plex Media Server
-After=network-online.target
+After=network-online.target stream-pod.service
+Wants=stream-pod.service
 
 [Container]
 ContainerName=plex
@@ -15,8 +16,8 @@ Volume=/srv/quartermaster/plex/data/plex/config:/config:Z
 Volume=/srv/quartermaster/plex/data/plex/transcode:/transcode:Z
 
 AddDevice=/dev/dri:/dev/dri
-SecurityLabelDisable=true
 NoNewPrivileges=true
+GroupAdd=keep-groups
 
 [Install]
 WantedBy=default.target

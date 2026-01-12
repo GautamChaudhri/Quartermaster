@@ -1,6 +1,7 @@
 [Unit]
 Description=Caddy reverse proxy
-After=network-online.target
+After=network-online.target stream-pod.service
+Wants=stream-pod.service
 
 [Container]
 ContainerName=caddy
@@ -9,13 +10,13 @@ Pod=stream.pod
 
 EnvironmentFile=/srv/quartermaster/plex/caddy.env
 
-Volume=/srv/quartermaster/plex/config/Caddyfile:/etc/caddy/Caddyfile:ro,Z
+Volume=/srv/quartermaster/plex/config/Caddyfile:/etc/caddy/Caddyfile:ro,z
 Volume=/srv/quartermaster/plex/data/caddy/data:/data:Z
 Volume=/srv/quartermaster/plex/data/caddy/config:/config:Z
+Volume=/srv/quartermaster/plex/data/logs:/var/log/caddy:z
 
 DropCapability=ALL
 AddCapability=NET_BIND_SERVICE
-ReadOnly=true
 SecurityLabelDisable=false
 NoNewPrivileges=true
 

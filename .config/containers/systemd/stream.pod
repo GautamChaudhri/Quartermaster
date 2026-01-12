@@ -1,14 +1,11 @@
 [Pod]
 PodName=stream
 Network=proxy-net.network
-
-# Caddy ports
 PublishPort=11080:80
 PublishPort=11443:443
 PublishPort=11443:443/udp
-
-# Plex direct access
 PublishPort=32400:32400
+PublishPort=127.0.0.1:8080:8080
 
 [Install]
 WantedBy=default.target

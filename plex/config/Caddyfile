@@ -3,6 +3,13 @@
 	servers {
 		protocols h1 h2 h2c h3
 	}
+	log {
+		output file /var/log/caddy/access.log {
+			roll_size 10MB
+			roll_keep 5
+		}
+		format json
+	}
 }
 
 http://{$PLEX_DOMAIN} {
@@ -11,17 +18,14 @@ http://{$PLEX_DOMAIN} {
 
 https://{$PLEX_DOMAIN} {
 	reverse_proxy https://plex:32400 {
-		# Headers
 		header_up X-Real-IP {remote_host}
 		header_up X-Forwarded-For {remote_host}
 		header_up X-Forwarded-Proto https
 		header_up Host {host}
 
-		# WebSocket support (explicit)
 		header_up Connection {header.Connection}
 		header_up Upgrade {header.Upgrade}
 
-		# Trust Plex's self-signed cert
 		transport http {
 			tls_insecure_skip_verify
 		}
