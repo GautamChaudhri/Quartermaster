@@ -1,0 +1,16 @@
+# Ignore everything by default
+*
+
+# Include these directories
+!.config/
+!.config/**
+!plex/
+!plex/**
+
+# Exclude secrets and data
+plex/data/
+plex/*.env
+plex/.env
+
+# Include gitignore itself
+!.gitignore

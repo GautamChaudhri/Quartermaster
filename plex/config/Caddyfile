@@ -1,0 +1,37 @@
+{
+	email {$ACME_EMAIL}
+	servers {
+		protocols h1 h2 h2c h3
+	}
+}
+
+http://{$PLEX_DOMAIN} {
+	redir https://{host}{uri} permanent
+}
+
+https://{$PLEX_DOMAIN} {
+	reverse_proxy https://plex:32400 {
+		# Headers
+		header_up X-Real-IP {remote_host}
+		header_up X-Forwarded-For {remote_host}
+		header_up X-Forwarded-Proto https
+		header_up Host {host}
+
+		# WebSocket support (explicit)
+		header_up Connection {header.Connection}
+		header_up Upgrade {header.Upgrade}
+
+		# Trust Plex's self-signed cert
+		transport http {
+			tls_insecure_skip_verify
+		}
+	}
+
+	header {
+		-Server
+		X-Content-Type-Options nosniff
+		X-Frame-Options SAMEORIGIN
+		Referrer-Policy strict-origin-when-cross-origin
+		Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+	}
+}
