@@ -1,0 +1,23 @@
+[Unit]
+Description=Traefik reverse proxy
+After=network-online.target stream-pod.service
+Wants=stream-pod.service
+
+[Container]
+ContainerName=traefik
+Image=docker.io/library/traefik:v3.6.7
+Pod=stream.pod
+EnvironmentFile=%h/plex/.env/traefik.env
+
+Volume=%h/plex/config/traefik:/etc/traefik:ro,Z
+Volume=%h/plex/data/traefik/acme:/acme:Z
+Volume=%h/plex/data/logs/traefik:/var/log/traefik:z
+Volume=%h/plex/data/traefik/plugins:/plugins-local:Z
+Volume=%h/plex/data/traefik/plugins-storage:/plugins-storage:Z
+DropCapability=ALL
+AddCapability=NET_BIND_SERVICE
+NoNewPrivileges=true
+
+
+[Install]
+WantedBy=default.target

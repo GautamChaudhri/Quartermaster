@@ -1,0 +1,37 @@
+# Traefik Dynamic Configuration - Routers & Services
+# /etc/traefik/dynamic/services.yml
+
+http:
+  routers:
+    # Plex router
+    plex:
+      rule: "Host(`plex.freebox.tech`)"
+      entryPoints:
+        - websecure
+      service: plex
+      tls:
+        certResolver: letsencrypt
+      # Additional middlewares specific to Plex (on top of global ones)
+      middlewares: []
+
+    # Plex direct access (for app compatibility)
+    plex-direct:
+      rule: "Host(`plex.freebox.tech`) && PathPrefix(`/web`)"
+      entryPoints:
+        - websecure
+      service: plex
+      priority: 100
+      tls:
+        certResolver: letsencrypt
+
+  services:
+    plex:
+      loadBalancer:
+        servers:
+          # Plex runs in the same pod, so localhost works
+          - url: "http://127.0.0.1:32400"
+        passHostHeader: true
+        healthCheck:
+          path: /identity
+          interval: 30s
+          timeout: 5s

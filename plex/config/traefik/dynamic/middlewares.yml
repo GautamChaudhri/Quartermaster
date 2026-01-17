@@ -1,0 +1,85 @@
+# Traefik Dynamic Configuration - Middlewares
+# /etc/traefik/dynamic/middlewares.yml
+
+http:
+  middlewares:
+    # CrowdSec Bouncer - queries your Pi's LAPI for ban decisions
+    crowdsec:
+      plugin:
+        crowdsec:
+          enabled: true
+          crowdsecLapiScheme: http
+          crowdsecLapiHost: "192.168.4.97:8080"
+          crowdsecLapiKey: "8xPkQlkpVgrwFDvriRyvN21GkgwE5l99EYhlYmKrCog"
+          crowdsecMode: live
+          crowdsecLapiLogLevel: INFO
+          crowdsecLapiBanTemplate: /etc/traefik/templates/ban.html
+          updateIntervalSeconds: 15
+          defaultDecisionSeconds: 60
+          defaultDecision: allow  # or "ban" for stricter security
+
+    # GeoBlocking - block countries you don't expect traffic from
+    #geoblock:
+    #  plugin:
+    #    geoblock:
+    #      # Allow only these countries (ISO 3166-1 alpha-2 codes)
+    #      # Adjust based on where you/your users are located
+    #      allowedCountries:
+    #        - US  # United States
+    #        # Add more as needed: CA, GB, DE, etc.
+    #      # Block requests with no country info
+    #      unknownCountryApiResponse: allow
+    #      # GeoIP database (included in plugin)
+    #      databaseFilePath: /plugins-local/geoblock/GeoLite2-Country.mmdb
+    #      # Optional: Custom blocked page
+    #      # blockedCustomMessage: "Access denied from your location"
+    #      # Log blocked requests
+    #      logAllowedRequests: false
+    #      logBlockedRequests: true
+
+    # Security Headers
+    security-headers:
+      headers:
+        # HSTS
+        stsSeconds: 31536000
+        stsIncludeSubdomains: true
+        stsPreload: true
+        # Prevent clickjacking
+        frameDeny: true
+        # XSS Protection
+        browserXssFilter: true
+        # Content type sniffing protection
+        contentTypeNosniff: true
+        # Referrer policy
+        referrerPolicy: strict-origin-when-cross-origin
+        # Permissions policy
+        permissionsPolicy: >-
+          accelerometer=(),
+          camera=(),
+          geolocation=(),
+          gyroscope=(),
+          magnetometer=(),
+          microphone=(),
+          payment=(),
+          usb=()
+        # Custom headers
+        customResponseHeaders:
+          X-Robots-Tag: noindex,nofollow,nosnippet,noarchive,notranslate,noimageindex
+          server: ""  # Hide server header
+
+    # Rate Limiting
+    rate-limit:
+      rateLimit:
+        average: 600
+        burst: 1000
+        period: 1m
+        sourceCriterion:
+          ipStrategy:
+            depth: 0
+
+    # IP Whitelist (optional - for admin paths)
+    admin-whitelist:
+      ipAllowList:
+        sourceRange:
+          - "127.0.0.1/32"
+          - "192.168.4.3/32"
