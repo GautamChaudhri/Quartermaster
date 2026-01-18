@@ -14,6 +14,7 @@ Environment=ENABLE_VAAPI=true
 Volume=/mnt/PLUNDER/Media:/plunder:ro
 Volume=/srv/quartermaster/plex/data/plex/config:/config:Z
 Volume=/srv/quartermaster/plex/data/plex/transcode:/transcode:Z
+Volume=%h/plex/data/logs/plex:/config/Library/Application Support/Plex Media Server/Logs:z
 
 AddDevice=/dev/dri:/dev/dri
 NoNewPrivileges=true

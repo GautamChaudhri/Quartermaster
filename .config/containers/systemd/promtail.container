@@ -1,0 +1,21 @@
+[Unit]
+Description=Promtail Log Shipper
+After=network-online.target
+
+[Container]
+Image=docker.io/grafana/promtail:latest
+ContainerName=promtail
+Exec=-config.file=/etc/promtail/promtail-config.yml
+
+Volume=%h/promtail/config/promtail:/etc/promtail:ro,Z
+Volume=%h/promtail/data/promtail/positions:/positions:Z
+Volume=%h/plex/data/logs:/var/log/app:ro,z
+Volume=/var/log:/var/log/system:ro
+
+SecurityLabelDisable=true
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

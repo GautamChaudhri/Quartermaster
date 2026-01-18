@@ -1,5 +1,12 @@
+---
 # Traefik access logs (JSON format)
 filenames:
   - /var/log/traefik/access.log
 labels:
   type: traefik
+---
+# SSH logs
+filenames:
+  - /var/log/secure.log
+labels:
+  type: syslog
