@@ -7,7 +7,7 @@ Wants=stream-pod.service
 ContainerName=traefik
 Image=docker.io/library/traefik:v3.6.7
 Pod=stream.pod
-EnvironmentFile=/srv/quartermaster/plex/.env/traefik.env
+EnvironmentFile=/srv/quartermaster/.env/traefik.env
 
 Volume=/srv/quartermaster/config/traefik:/etc/traefik:ro,Z
 Volume=/srv/quartermaster/data/traefik/acme:/acme:Z
