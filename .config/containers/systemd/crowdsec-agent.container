@@ -8,12 +8,13 @@ Requires=traefik.service
 ContainerName=crowdsec-agent
 Image=docker.io/crowdsecurity/crowdsec:v1.7.4-slim
 Pod=stream.pod
-EnvironmentFile=%h/plex/.env/crowdsec-agent.env
-Volume=%h/plex/data/crowdsec-agent/config:/etc/crowdsec:Z
-Volume=%h/plex/data/crowdsec-agent/data:/var/lib/crowdsec/data:Z
-Volume=%h/plex/data/logs/traefik:/var/log/traefik:ro,z
-Volume=%h/plex/config/crowdsec-agent/acquis.yml:/etc/crowdsec/acquis.yaml:ro,Z
-Volume=%h/plex/data/logs/ssh/secure.log:/var/log/secure.log:ro,z
+EnvironmentFile=/srv/quartermaster/.env/crowdsec-agent.env
+
+Volume=/srv/quartermaster/data/crowdsec-agent/data:/var/lib/crowdsec/data:Z
+Volume=/srv/quartermaster/data/crowdsec-agent/config:/etc/crowdsec:Z
+Volume=/srv/quartermaster/config/crowdsec-agent/acquis.yml:/etc/crowdsec/acquis.yaml:ro,Z
+Volume=/srv/quartermaster/logs/traefik:/var/log/traefik:ro,z
+Volume=/srv/quartermaster/logs/ssh/secure.log:/var/log/secure.log:ro,z
 NoNewPrivileges=true
 
 [Install]
