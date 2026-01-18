@@ -12,7 +12,7 @@ EnvironmentFile=/srv/quartermaster/.env/crowdsec-agent.env
 
 Volume=/srv/quartermaster/data/crowdsec-agent/data:/var/lib/crowdsec/data:Z
 Volume=/srv/quartermaster/data/crowdsec-agent/config:/etc/crowdsec:Z
-Volume=/srv/quartermaster/config/crowdsec-agent/acquis.yml:/etc/crowdsec/acquis.yaml:ro,Z
+Volume=/srv/quartermaster/config/crowdsec-agent/acquis.yaml:/etc/crowdsec/acquis.yaml:ro,Z
 Volume=/srv/quartermaster/logs/traefik:/var/log/traefik:ro,z
 Volume=/srv/quartermaster/logs/ssh/secure.log:/var/log/secure.log:ro,z
 NoNewPrivileges=true
