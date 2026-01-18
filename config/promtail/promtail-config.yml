@@ -1,0 +1,73 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+positions:
+  filename: /positions/positions.yaml
+clients:
+  - url: http://192.168.4.97:3100/loki/api/v1/push
+scrape_configs:
+  - job_name: traefik
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: traefik
+          host: galleon
+          __path__: /var/log/app/traefik/*.log
+
+  - job_name: secure
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: secure
+          host: galleon
+          __path__: /var/log/app/secure.log
+
+  - job_name: plex
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: plex
+          host: galleon
+          __path__: /var/log/app/plex/Plex Media Server.log
+
+  - job_name: plex-crash
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: plex-crash
+          host: galleon
+          __path__: /var/log/app/plex/Plex Crash Uploader.log
+
+  - job_name: syslog-messages
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: syslog
+          host: galleon
+          logtype: messages
+          __path__: /var/log/system/messages
+
+  - job_name: syslog-secure
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: syslog
+          host: galleon
+          logtype: secure
+          __path__: /var/log/system/secure
+
+  - job_name: syslog-cron
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: syslog
+          host: galleon
+          logtype: cron
+          __path__: /var/log/system/cron
