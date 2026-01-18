@@ -8,9 +8,9 @@
 !plex/**
 
 # Exclude secrets and data
-plex/data/
-plex/*.env
-plex/.env
+crowdsec/data/
+crowdsec/*.env
+crowdsec/.env
 
 # Include gitignore itself
 !.gitignore

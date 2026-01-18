@@ -1,19 +1,26 @@
 [Unit]
-Description=CrowdSec Security Engine
-After=network-online.target stream-pod.service
-Wants=stream-pod.service
+Description=CrowdSec LAPI (Brain) - rootless
+After=network-online.target
+Wants=network-online.target
 
 [Container]
 ContainerName=crowdsec
 Image=docker.io/crowdsecurity/crowdsec:v1.7.4-slim
-Pod=stream.pod
 
-EnvironmentFile=/srv/quartermaster/plex/crowdsec.env
+# If you use env vars (recommended), keep them here:
+EnvironmentFile=/srv/quartermaster/crowdsec/crowdsec.env
 
-Volume=/srv/quartermaster/plex/data/crowdsec/config:/etc/crowdsec:Z
-Volume=/srv/quartermaster/plex/data/crowdsec/data:/var/lib/crowdsec/data:Z
-Volume=/srv/quartermaster/plex/data/logs:/var/log/caddy:ro,z
-Volume=/srv/quartermaster/plex/config/acquis.yaml:/etc/crowdsec/acquis.yaml:ro,z
+# CrowdSec config + data
+Volume=/srv/quartermaster/crowdsec/config:/etc/crowdsec:Z
+Volume=/srv/quartermaster/crowdsec/data:/var/lib/crowdsec/data:Z
+
+# Optional: if you want an acquis directory (usually NOT needed on the brain)
+# Put your local acquisition configs in /srv/quartermaster/crowdsec/acquis.d/
+Volume=/srv/quartermaster/crowdsec/acquis.d:/etc/crowdsec/acquis.d:ro,Z
+Volume=/var/log/auth.log:/var/log/auth.log:ro
+
+# Expose LAPI.
+PublishPort=192.168.4.97:8080:8080
 
 HealthCmd=cscli lapi status
 HealthInterval=30s
