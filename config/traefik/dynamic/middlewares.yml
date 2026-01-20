@@ -9,7 +9,7 @@ http:
         crowdsec:
           enabled: true
           crowdsecLapiScheme: http
-          crowdsecLapiHost: "192.168.4.97:8080"
+          crowdsecLapiHost: "100.68.46.73:8080"
           crowdsecLapiKey: "8xPkQlkpVgrwFDvriRyvN21GkgwE5l99EYhlYmKrCog"
           crowdsecMode: live
           crowdsecLapiLogLevel: INFO

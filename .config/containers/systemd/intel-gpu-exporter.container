@@ -1,0 +1,33 @@
+[Unit]
+Description=Intel GPU Exporter for Prometheus
+After=network-online.target
+
+[Container]
+Image=ghcr.io/onedr0p/intel-gpu-exporter:rolling
+ContainerName=intel-gpu-exporter
+Pod=monitoring.pod
+
+# Security hardening
+ReadOnly=true
+DropCapability=all
+NoNewPrivileges=true
+
+# Minimal capability for GPU access (instead of privileged)
+AddCapability=SYS_ADMIN
+
+# GPU device access
+AddDevice=/dev/dri:/dev/dri:rwm
+
+# Required for intel_gpu_top
+PodmanArgs=--pid=host --memory=128m --memory-swap=128m --pids-limit=32
+
+# Read-only volume for DRM info
+Volume=/sys/class/drm:/sys/class/drm:ro
+
+[Service]
+Restart=on-failure
+RestartSec=10
+TimeoutStartSec=60
+
+[Install]
+WantedBy=default.target

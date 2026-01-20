@@ -1,0 +1,12 @@
+[Unit]
+Description=Monitoring and Logging Pod
+After=network-online.target
+
+[Pod]
+PodName=monitoring
+
+# All ports bound to Tailscale IP only
+PublishPort=100.70.230.73:11045:9100
+
+[Install]
+WantedBy=default.target

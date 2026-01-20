@@ -4,7 +4,7 @@ server:
 positions:
   filename: /positions/positions.yaml
 clients:
-  - url: http://192.168.4.97:3100/loki/api/v1/push
+  - url: http://100.68.46.73:3100/loki/api/v1/push
 scrape_configs:
   - job_name: traefik
     static_configs:

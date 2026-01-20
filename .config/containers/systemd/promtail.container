@@ -5,6 +5,8 @@ After=network-online.target
 [Container]
 Image=docker.io/grafana/promtail:latest
 ContainerName=promtail
+Pod=monitoring.pod
+
 Exec=-config.file=/etc/promtail/promtail-config.yml
 
 Volume=/srv/quartermaster/config/promtail:/etc/promtail:ro,Z
@@ -12,10 +14,18 @@ Volume=/srv/quartermaster/data/promtail/positions:/positions:Z
 Volume=/srv/quartermaster/logs:/var/log/app:ro,z
 Volume=/var/log:/var/log/system:ro
 
+# Security hardening
+ReadOnly=true
+DropCapability=all
+NoNewPrivileges=true
+
 SecurityLabelDisable=true
 
+PodmanArgs=--memory=128m --memory-swap=128m --pids-limit=32
+
 [Service]
-Restart=always
+Restart=on-failure
+RestartSec=10
 
 [Install]
 WantedBy=default.target

@@ -1,0 +1,36 @@
+[Unit]
+Description=Node Exporter for Prometheus
+After=network-online.target
+
+[Container]
+Image=docker.io/prom/node-exporter:latest
+ContainerName=node-exporter
+Pod=monitoring.pod
+
+# Security hardening
+ReadOnly=true
+DropCapability=all
+NoNewPrivileges=true
+
+# Run as nobody user
+User=65534
+Group=65534
+
+# Minimal host access for metrics
+Volume=/proc:/host/proc:ro
+Volume=/sys:/host/sys:ro
+Volume=/:/host/rootfs:ro,rslave
+
+# Container arguments
+Exec=--path.procfs=/host/proc --path.sysfs=/host/sys --path.rootfs=/host/rootfs
+
+# Resource limits
+PodmanArgs=--memory=128m --memory-swap=128m --pids-limit=64
+
+[Service]
+Restart=on-failure
+RestartSec=10
+TimeoutStartSec=60
+
+[Install]
+WantedBy=default.target
