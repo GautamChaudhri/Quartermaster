@@ -24,14 +24,26 @@ http:
       tls:
         certResolver: letsencrypt
 
+  middlewares:
+    plex-headers:
+      headers:
+        customRequestHeaders:
+          X-Forwarded-For: ""  # Let Traefik set this automatically
+          X-Real-IP: ""        # Let Traefik set this automatically
+
   services:
     plex:
       loadBalancer:
         servers:
           # Plex runs in the same pod, so localhost works
-          - url: "http://127.0.0.1:32400"
+          - url: "https://127.0.0.1:32400"
         passHostHeader: true
+        serversTransport: plex-transport
         healthCheck:
           path: /identity
           interval: 30s
           timeout: 5s
+
+  serversTransports:
+    plex-transport:
+      insecureSkipVerify: true
