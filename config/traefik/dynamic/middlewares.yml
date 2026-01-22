@@ -10,7 +10,7 @@ http:
           enabled: true
           crowdsecLapiScheme: http
           crowdsecLapiHost: "100.68.46.73:8080"
-          crowdsecLapiKey: "8xPkQlkpVgrwFDvriRyvN21GkgwE5l99EYhlYmKrCog"
+          crowdsecLapiKey: "xq4vsPm2911HNdbWoKFTkmfOLJXPCcIhrhGoiwbq4+Q"
           crowdsecMode: live
           crowdsecLapiLogLevel: INFO
           crowdsecLapiBanTemplate: /etc/traefik/templates/ban.html
@@ -83,3 +83,4 @@ http:
         sourceRange:
           - "127.0.0.1/32"
           - "192.168.4.3/32"
+          - "192.168.4.4/32"
