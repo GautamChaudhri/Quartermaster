@@ -21,6 +21,7 @@ Volume=/var/log/auth.log:/var/log/auth.log:ro
 
 # Expose LAPI.
 PublishPort=192.168.4.97:8080:8080
+PublishPort=100.68.46.73:8080:8080
 
 HealthCmd=cscli lapi status
 HealthInterval=30s
