@@ -1,6 +1,9 @@
+[Unit]
+After=wait-tailscale.service
+Requires=wait-tailscale.service
+
 [Pod]
 PodName=stream
-#Network=proxy-net.network
 PublishPort=11080:80
 PublishPort=11443:443
 PublishPort=11443:443/udp

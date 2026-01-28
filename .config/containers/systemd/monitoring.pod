@@ -1,6 +1,7 @@
 [Unit]
 Description=Monitoring and Logging Pod
-After=network-online.target
+After=wait-tailscale.service
+Requires=wait-tailscale.service
 
 [Pod]
 PodName=monitoring

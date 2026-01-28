@@ -1,0 +1,12 @@
+[Unit]
+Description=Wait for Tailscale IP to be available
+After=network-online.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/bin/bash -c 'until ip addr show | grep -q "100.70.230.73"; do sleep 1; done'
+TimeoutStartSec=120
+
+[Install]
+WantedBy=default.target
