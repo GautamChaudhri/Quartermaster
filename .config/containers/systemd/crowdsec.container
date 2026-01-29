@@ -1,25 +1,18 @@
 [Unit]
 Description=CrowdSec LAPI (Brain) - rootless
-After=network-online.target
+After=network-online.target wait-tailscale.service
 Wants=network-online.target
+Requires=wait-tailscale.service
 
 [Container]
 ContainerName=crowdsec
 Image=docker.io/crowdsecurity/crowdsec:v1.7.4-slim
 
-# If you use env vars (recommended), keep them here:
 EnvironmentFile=/srv/quartermaster/crowdsec/crowdsec.env
-
-# CrowdSec config + data
 Volume=/srv/quartermaster/crowdsec/config:/etc/crowdsec:Z
 Volume=/srv/quartermaster/crowdsec/data:/var/lib/crowdsec/data:Z
-
-# Optional: if you want an acquis directory (usually NOT needed on the brain)
-# Put your local acquisition configs in /srv/quartermaster/crowdsec/acquis.d/
 Volume=/srv/quartermaster/crowdsec/acquis.d:/etc/crowdsec/acquis.d:ro,Z
 Volume=/var/log/auth.log:/var/log/auth.log:ro
-
-# Expose LAPI.
 PublishPort=192.168.4.97:8080:8080
 PublishPort=100.68.46.73:8080:8080
 
