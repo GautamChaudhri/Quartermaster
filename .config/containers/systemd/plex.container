@@ -6,6 +6,7 @@ Wants=stream-pod.service
 [Container]
 ContainerName=plex
 Image=docker.io/linuxserver/plex:latest
+AutoUpdate=registry
 Pod=stream.pod
 
 EnvironmentFile=/srv/quartermaster/.env/plex.env
