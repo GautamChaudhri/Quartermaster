@@ -1,0 +1,22 @@
+[Unit]
+Description=Cloudflare Tunnel for Little Prodigies Care
+After=network-online.target
+
+[Container]
+ContainerName=cloudflared
+Pod=lpc.pod
+Image=docker.io/cloudflare/cloudflared:latest
+AutoUpdate=registry
+Exec=tunnel --no-autoupdate run --token eyJhIjoiM2ZkNGM4YWJiZWI4ZmUwNDViM2Q4NmQ4NTUzNmQ0MmQiLCJ0IjoiOGI2M2U0NGQtNjUwZi00YmRiLThkNzAtMmVhOWJmZjhlY2QzIiwicyI6IllUVTRaREJtTkRndE1UWmpZaTAwWmpZeUxXRTFNV1l0WWpnNU1UbGlZekpsTm1RdyJ9
+
+# Security hardening
+NoNewPrivileges=true
+DropCapability=all
+ReadOnly=true
+
+[Service]
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=default.target

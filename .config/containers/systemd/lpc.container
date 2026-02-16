@@ -1,0 +1,23 @@
+[Unit]
+Description=Little Prodigies Care Website
+After=network-online.target
+
+[Container]
+ContainerName=lpc
+Pod=lpc.pod
+Image=ghcr.io/gautamchaudhri/littleprodigiescare:latest
+AutoUpdate=registry
+EnvironmentFile=/srv/quartermaster/.env/lpc.env
+Volume=/srv/quartermaster/data/lpc:/app/data:Z
+
+# Security hardening
+NoNewPrivileges=true
+DropCapability=all
+PodmanArgs=--memory=256m --memory-swap=256m --pids-limit=64
+
+[Service]
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=default.target

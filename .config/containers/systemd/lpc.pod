@@ -1,0 +1,9 @@
+[Unit]
+Description=Little Prodigies Care Pod
+After=network-online.target
+
+[Pod]
+PodName=lpc-pod
+
+[Install]
+WantedBy=default.target
