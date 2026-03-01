@@ -3,6 +3,7 @@ Description=Node Exporter for Prometheus
 After=network-online.target
 
 [Container]
+AutoUpdate=registry
 Image=docker.io/prom/node-exporter:latest
 ContainerName=node-exporter
 Pod=monitoring.pod

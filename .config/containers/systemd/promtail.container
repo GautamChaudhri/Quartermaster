@@ -3,6 +3,7 @@ Description=Promtail Log Shipper
 After=network-online.target
 
 [Container]
+AutoUpdate=registry
 Image=docker.io/grafana/promtail:latest
 ContainerName=promtail
 Pod=monitoring.pod

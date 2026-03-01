@@ -3,7 +3,9 @@ Description=Intel GPU Exporter for Prometheus
 After=network-online.target
 
 [Container]
+AutoUpdate=registry
 Image=ghcr.io/onedr0p/intel-gpu-exporter:rolling
+AutoUpdate=registry
 ContainerName=intel-gpu-exporter
 Pod=monitoring.pod
 

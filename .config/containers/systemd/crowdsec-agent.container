@@ -6,7 +6,8 @@ Requires=traefik.service
 
 [Container]
 ContainerName=crowdsec-agent
-Image=docker.io/crowdsecurity/crowdsec:v1.7.4-slim
+Image=docker.io/crowdsecurity/crowdsec:slim
+AutoUpdate=registry
 Pod=stream.pod
 EnvironmentFile=/srv/quartermaster/.env/crowdsec-agent.env
 

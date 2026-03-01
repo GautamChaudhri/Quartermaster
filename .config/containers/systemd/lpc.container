@@ -6,7 +6,7 @@ After=network-online.target
 ContainerName=lpc
 Pod=lpc.pod
 Image=ghcr.io/gautamchaudhri/littleprodigiescare:latest
-AutoUpdate=registry
+#AutoUpdate=registry
 EnvironmentFile=/srv/quartermaster/.env/lpc.env
 Volume=/srv/quartermaster/data/lpc:/app/data:Z
 
