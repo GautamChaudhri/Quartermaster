@@ -6,8 +6,8 @@ Requires=wait-tailscale.service
 
 [Container]
 ContainerName=crowdsec
-Image=docker.io/crowdsecurity/crowdsec:v1.7.4-slim
-
+Image=docker.io/crowdsecurity/crowdsec:slim
+AutoUpdate=registry
 EnvironmentFile=/srv/quartermaster/crowdsec/crowdsec.env
 Volume=/srv/quartermaster/crowdsec/config:/etc/crowdsec:Z
 Volume=/srv/quartermaster/crowdsec/data:/var/lib/crowdsec/data:Z
